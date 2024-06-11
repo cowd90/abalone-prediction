@@ -27,7 +27,7 @@ public class PredictionController {
 
     @PostConstruct
     public void init() {
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("best_model.pmml")) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("stacking_model.pmml")) {
             if (is == null) {
                 throw new IllegalArgumentException("File not found!");
             }
@@ -47,15 +47,25 @@ public class PredictionController {
     public Map<String, Object> predict(@RequestBody Map<String, Object> input) {
         Map<FieldName, FieldValue> arguments = new LinkedHashMap<>();
 
+        String gender = input.get("Sex").toString();
+        double sexMValue = 0.0;
+        double sexIValue = 0.0;
+
+        if (gender.equals("Male")) {
+            sexMValue = 1.0;
+        } else if (gender.equals("Infant")) {
+            sexIValue = 1.0;
+        }
+
         for (InputField inputField : this.evaluator.getInputFields()) {
             FieldName inputFieldName = inputField.getName();
             Object rawValue = input.get(inputFieldName.getValue());
 
             // Xử lý các biến chỉ báo giới tính
-            if (inputFieldName.getValue().equals("Sex")) {
-                String gender = rawValue.toString();
-                arguments.put(FieldName.create("Sex_M"), inputField.prepare(gender.equals("Male") ? 1.0 : 0.0));
-                arguments.put(FieldName.create("Sex_I"), inputField.prepare(gender.equals("Infant") ? 1.0 : 0.0));
+            if (inputFieldName.getValue().equals("Sex_M")) {
+                arguments.put(inputFieldName, inputField.prepare(sexMValue));
+            } else if (inputFieldName.getValue().equals("Sex_I")) {
+                arguments.put(inputFieldName, inputField.prepare(sexIValue));
             } else {
                 FieldValue inputFieldValue = inputField.prepare(rawValue);
                 arguments.put(inputFieldName, inputFieldValue);

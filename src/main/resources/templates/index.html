@@ -45,9 +45,13 @@
         let formData = new FormData(form);
         let object = {};
         formData.forEach((value, key) => object[key] = value);
+
+        // Convert gender value to either Sex_M or Sex_I
+        object['Sex'] = object['Sex'] === 'Sex_M' ? 'Male' : 'Infant';
+
         let json = JSON.stringify(object);
 
-        fetch('/api/predict', {
+        fetch('/api/v1/prediction', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,10 +60,9 @@
         })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('Rings').innerHTML = 'Predicted Age: ' + data['Age'];
+                document.getElementById('Rings').innerHTML = 'Predicted Rings: ' + data['Rings'];
             });
     }
 </script>
 </body>
 </html>
-
