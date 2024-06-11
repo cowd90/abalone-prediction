@@ -29,6 +29,11 @@ h1 {
     width: 48%;
 }
 
+.gender {
+    display: flex;
+    justify-content: space-between;
+}
+
 label {
     margin-bottom: 5px;
     display: block;
