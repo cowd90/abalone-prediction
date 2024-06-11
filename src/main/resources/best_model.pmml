@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" version="4.4">
+    <Header>
+        <Application name="SkLearn2PMML package" version="0.108.0"/>
+        <Timestamp>2024-06-11T00:10:05Z</Timestamp>
+    </Header>
+    <DataDictionary>
+        <DataField name="Length" optype="continuous" dataType="double"/>
+        <DataField name="Diameter" optype="continuous" dataType="double"/>
+        <DataField name="Height" optype="continuous" dataType="double"/>
+        <DataField name="WholeWeight" optype="continuous" dataType="double"/>
+        <DataField name="ShuckedWeight" optype="continuous" dataType="double"/>
+        <DataField name="VisceraWeight" optype="continuous" dataType="double"/>
+        <DataField name="ShellWeight" optype="continuous" dataType="double"/>
+        <DataField name="Sex" optype="categorical" dataType="string"/>
+        <DataField name="Age" optype="continuous" dataType="double"/>
+    </DataDictionary>
+    <RegressionModel functionName="regression" algorithmName="sklearn.linear_model._base.LinearRegression">
+        <MiningSchema>
+            <MiningField name="Length"/>
+            <MiningField name="Diameter"/>
+            <MiningField name="Height"/>
+            <MiningField name="WholeWeight"/>
+            <MiningField name="ShuckedWeight"/>
+            <MiningField name="VisceraWeight"/>
+            <MiningField name="ShellWeight"/>
+            <MiningField name="Sex"/>
+            <MiningField name="Age" usageType="target"/>
+        </MiningSchema>
+        <Output>
+            <OutputField name="Age" optype="continuous" dataType="double" feature="predictedValue"/>
+        </Output>
+        <RegressionTable intercept="9.94462735707872">
+            <NumericPredictor name="Length" coefficient="-0.30648948065575965"/>
+            <NumericPredictor name="Diameter" coefficient="-0.07175879126413764"/>
+            <NumericPredictor name="Height" coefficient="1.1829461006862811"/>
+            <NumericPredictor name="WholeWeight" coefficient="0.4589855365593575"/>
+            <NumericPredictor name="ShuckedWeight" coefficient="4.423288898122539"/>
+            <NumericPredictor name="VisceraWeight" coefficient="-4.576544358859735"/>
+            <NumericPredictor name="ShellWeight" coefficient="-1.005254501221401"/>
+            <CategoricalPredictor name="Sex" value="F" coefficient="1.226019857809001"/>
+        </RegressionTable>
+    </RegressionModel>
+</PMML>

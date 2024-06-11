@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="SkLearn2PMML package" version="0.108.0"/>
+		<Timestamp>2024-06-11T04:34:36Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension name="repr">PMMLPipeline(steps=[('mapper', DataFrameMapper(drop_cols=[],
+                features=[(['Length'], None), (['Diameter'], None),
+                          (['Height'], None), (['Whole weight'], None),
+                          (['Shucked weight'], None),
+                          (['Viscera weight'], None), (['Shell weight'], None),
+                          (['Sex_I'], None), (['Sex_M'], None)])),
+       ('regressor', LinearRegression())])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="Rings" optype="continuous" dataType="double"/>
+		<DataField name="Length" optype="continuous" dataType="double"/>
+		<DataField name="Diameter" optype="continuous" dataType="double"/>
+		<DataField name="Height" optype="continuous" dataType="double"/>
+		<DataField name="WholeWeight" optype="continuous" dataType="double"/>
+		<DataField name="ShuckedWeight" optype="continuous" dataType="double"/>
+		<DataField name="VisceraWeight" optype="continuous" dataType="double"/>
+		<DataField name="ShellWeight" optype="continuous" dataType="double"/>
+		<DataField name="Sex_I" optype="continuous" dataType="double"/>
+		<DataField name="Sex_M" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<RegressionModel functionName="regression" algorithmName="sklearn.linear_model._base.LinearRegression">
+		<MiningSchema>
+			<MiningField name="Length"/>
+			<MiningField name="Diameter"/>
+			<MiningField name="Height"/>
+			<MiningField name="WholeWeight"/>
+			<MiningField name="ShuckedWeight"/>
+			<MiningField name="VisceraWeight"/>
+			<MiningField name="ShellWeight"/>
+			<MiningField name="Sex_I"/>
+			<MiningField name="Sex_M"/>
+			<MiningField name="Rings" usageType="target"/>
+		</MiningSchema>
+		<Output>
+            <OutputField name="Rings" optype="continuous" dataType="double" feature="predictedValue"/>
+        </Output>
+		<RegressionTable intercept="3.7434702028680107">
+			<NumericPredictor name="Length" coefficient="-0.20155384598212492"/>
+			<NumericPredictor name="Diameter" coefficient="11.123391180876174"/>
+			<NumericPredictor name="Height" coefficient="10.445325346754693"/>
+			<NumericPredictor name="WholeWeight" coefficient="8.93217554826588"/>
+			<NumericPredictor name="ShuckedWeight" coefficient="-20.256544788342673"/>
+			<NumericPredictor name="VisceraWeight" coefficient="-9.558916304826422"/>
+			<NumericPredictor name="ShellWeight" coefficient="8.79237822521785"/>
+			<NumericPredictor name="Sex_I" coefficient="-0.7189744410491468"/>
+			<NumericPredictor name="Sex_M" coefficient="0.10327613407554859"/>
+		</RegressionTable>
+	</RegressionModel>
+</PMML>

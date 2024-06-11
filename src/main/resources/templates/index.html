@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abalone Age Prediction</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Abalone Age Prediction</h1>
+    <div class="form-container">
+        <form id="predictionForm" class="form">
+            <div class="form-column">
+                <label for="gender">Gender:</label>
+                <select name="Sex" id="gender">
+                    <option value="Sex_M">Male</option>
+                    <option value="Sex_I">Infant</option>
+                </select>
+                <label for="length">Length:</label>
+                <input type="number" id="length" name="Length" step="0.01"><br>
+                <label for="diameter">Diameter:</label>
+                <input type="number" id="diameter" name="Diameter" step="0.01"><br>
+                <label for="whole_weight">Whole Weight:</label>
+                <input type="number" id="whole_weight" name="WholeWeight" step="0.01"><br>
+            </div>
+            <div class="form-column">
+                <label for="height">Height:</label>
+                <input type="number" id="height" name="Height" step="0.01"><br>
+                <label for="shucked_weight">Shucked Weight:</label>
+                <input type="number" id="shucked_weight" name="ShuckedWeight" step="0.01"><br>
+                <label for="viscera_weight">Viscera Weight:</label>
+                <input type="number" id="viscera_weight" name="VisceraWeight" step="0.01"><br>
+                <label for="shell_weight">Shell Weight:</label>
+                <input type="number" id="shell_weight" name="ShellWeight" step="0.01"><br>
+            </div>
+            <button type="button" onclick="predict()">Predict</button>
+        </form>
+    </div>
+    <div id="Rings"></div>
+</div>
+<script>
+    function predict() {
+        let form = document.getElementById('predictionForm');
+        let formData = new FormData(form);
+        let object = {};
+        formData.forEach((value, key) => object[key] = value);
+        let json = JSON.stringify(object);
+
+        fetch('/api/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: json
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('Rings').innerHTML = 'Predicted Age: ' + data['Age'];
+            });
+    }
+</script>
+</body>
+</html>
+
